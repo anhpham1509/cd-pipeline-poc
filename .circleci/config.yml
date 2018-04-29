@@ -73,7 +73,7 @@ jobs:
     working_directory: /cd-pipeline-poc
     steps:
       - checkout
-      - run: script/deploy.sh
+      - run: scripts/deploy.sh
 
   deploy:
     docker:
