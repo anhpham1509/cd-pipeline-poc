@@ -14,7 +14,7 @@ import (
 func main() {
 	err := config.Init(".env", &config.APIConfig)
 	if err != nil {
-		log.Fatalln("Couldn't set config from env variables:", err)
+		         log.Fatalln("Couldn't set config from env variables:", err)
 	}
 
 	db, err := model.OpenPG(config.APIConfig.Postgres)
