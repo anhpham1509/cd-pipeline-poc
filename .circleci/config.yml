@@ -59,7 +59,7 @@ jobs:
             if [[ $CIRCLE_BRANCH != "master" ]]; then
               if [[ $(git log origin/${CIRCLE_BRANCH}..${CIRCLE_BRANCH}) ]]; then
                 echo "Pushing autobot fixes"
-                git push --set-upstream pushback $CIRCLE_BRANCH
+                git push -q pushback $CIRCLE_BRANCH
                 exit 1
               fi
             fi
