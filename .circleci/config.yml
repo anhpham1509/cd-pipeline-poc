@@ -73,8 +73,7 @@ jobs:
     working_directory: /cd-pipeline-poc
     steps:
       - checkout
-      - run: make -v
-      - run: make deploy
+      - run: script/deploy.sh
 
   deploy:
     docker:
@@ -92,4 +91,4 @@ workflows:
             - build
       - deploy:
           requires:
-            - acceptance-testing
+            - hold
