@@ -101,7 +101,25 @@ jobs:
     working_directory: /cd-pipeline-poc
     steps:
       - checkout
-      - run: scripts/deploy.sh "production"
+      - run:
+          name: Install kubectl
+          command: |
+            if [[ $(kubectl version) != 0 ]]; then
+              gcloud components install kubectl
+            fi
+      - run:
+          name: Install envsubst
+          command: |
+            if [[ $(envsubst -V) != 0 ]]; then
+              set -x
+              apk add --update libintl
+              apk add --virtual build_deps gettext
+              cp /usr/bin/envsubst /usr/local/bin/envsubst
+              apk del build_deps
+            fi
+      - run:
+          name: Production deployment
+          command: scripts/deploy.sh "production"
 
 workflows:
   version: 2
