@@ -92,8 +92,7 @@ jobs:
       - run:
           name: Staging deployment
           command: |
-            UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
-            UNIFIED_NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
+            UNIFIED_NAMESPACE=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
             scripts/deploy.sh ${UNIFIED_NAMESPACE}
 
   deploy:
