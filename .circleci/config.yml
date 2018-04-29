@@ -42,11 +42,9 @@ jobs:
           name: Install npm
           command: |
             export NVM_DIR="$HOME/.nvm"
-            git clone https://github.com/creationix/nvm.git "$NVM_DIR"
-            cd "$NVM_DIR"
-            git checkout `git describe --abbrev=0 --tags --match "v[0-9]*" $(git rev-list --tags --max-count=1)`
-            \. "$NVM_DIR/nvm.sh"
-            cd /go/src/github.com/anhpham1509/cd-pipeline-poc
+            export NVM_VERSION=0.33.11
+            git clone --branch v${NVM_VERSION} https://github.com/creationix/nvm.git ${NVM_DIR}
+            \. "${NVM_DIR}/nvm.sh"
             nvm install
             echo "export NVM_DIR="$HOME/.nvm"\nsource $NVM_DIR/nvm.sh" >> ${BASH_ENV}
       - run:
