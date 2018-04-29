@@ -74,10 +74,22 @@ jobs:
     steps:
       - checkout
       - run:
+          name: Install kubectl
+          command: |
+            if [[ $(kubectl version) != 0 ]]; then
+              gcloud components install kubectl
+            fi
+      - run:
           name: Get unified namespace
           command: |
             UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
             NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
+      - run:
+          name: Install envsubst
+          command: |
+            if [[ $(envsubst -V) != 0 ]]; then
+              apk add gettext libintl envsubst
+            fi
       - run:
           name: Staging deployment
           command: scripts/deploy.sh ${NAMESPACE}
