@@ -27,7 +27,7 @@ do
   envsubst < ${file} > kubernetes/dist/${fileName}
 done
 
-if [[ ${CIRCLE_BRANCH} != "master" ]] then
+if [[ ${CIRCLE_BRANCH} -ne "master" ]]; then
   UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
   NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
 

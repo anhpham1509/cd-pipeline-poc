@@ -70,8 +70,10 @@ jobs:
   acceptance-testing:
     docker:
       - image: google/cloud-sdk:198.0.0-alpine
+    working_directory: /cd-pipeline-poc
     steps:
       - checkout
+      - run: make -v
       - run: make deploy
 
   deploy:
