@@ -1,0 +1,14 @@
+.DS_Store
+.vscode
+.idea
+*.iml
+*.log
+*.env
+
+dist
+kubernetes/dist
+
+node_modules
+vendor
+coverage
+tmp
