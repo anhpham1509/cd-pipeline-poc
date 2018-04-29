@@ -80,11 +80,6 @@ jobs:
               gcloud components install kubectl
             fi
       - run:
-          name: Get unified namespace
-          command: |
-            UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
-            NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
-      - run:
           name: Install envsubst
           command: |
             if [[ $(envsubst -V) != 0 ]]; then
@@ -96,7 +91,10 @@ jobs:
             fi
       - run:
           name: Staging deployment
-          command: scripts/deploy.sh ${NAMESPACE}
+          command: |
+            UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
+            UNIFIED_NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
+            scripts/deploy.sh ${UNIFIED_NAMESPACE}
 
   deploy:
     docker:
