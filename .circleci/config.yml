@@ -53,7 +53,6 @@ jobs:
       - run:
           name: Upload coverage to codecov.io
           command: bash <(curl -s https://codecov.io/bash)
-      - run: make build
       - run:
           name: Push changes
           command: |
@@ -64,6 +63,9 @@ jobs:
                 exit 1
               fi
             fi
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run: make build
   acceptance-testing:
     docker:
       - image: google/cloud-sdk:198.0.0-alpine

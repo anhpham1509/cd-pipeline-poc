@@ -4,10 +4,9 @@ DOCKER_TAG=`git rev-parse HEAD`
 KEY_FILENAME="gcr-service-key.json"
 
 # Build binaries
-parallel -k \
-  CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o api cmd/api/main.go \
-  CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o cms cmd/cms/main.go \
-  CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o sap cmd/sap/main.go
+CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o api cmd/api/main.go
+CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o cms cmd/cms/main.go
+CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o sap cmd/sap/main.go
 # CGO_ENABLED=0 GOOS=linux go build -installsuffix cgo -o api cmd/frontend/main.go
 
 # Build Docker images
@@ -29,6 +28,8 @@ docker build . \
 
 # Get authentication key to file
 echo ${CIRCLE_GCR_KEY} > ${HOME}/${KEY_FILENAME}
+
+cat ${HOME}/${KEY_FILENAME}
 
 # GCR Authentication
 docker login https://${DOCKER_REGISTRY} \
