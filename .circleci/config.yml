@@ -75,8 +75,6 @@ jobs:
       - image: google/cloud-sdk:198.0.0-alpine
     steps:
       - run: make deploy
-    branches:
-      only: "master"
 
 workflows:
   version: 2
