@@ -29,14 +29,18 @@ docker build . \
 # Get authentication key to file
 echo ${CIRCLE_GCR_KEY} > ${HOME}/${KEY_FILENAME}
 
-cat ${HOME}/${KEY_FILENAME}
-
 # GCR Authentication
 docker login https://${DOCKER_REGISTRY} \
-  -u _json_key --password-stdin < ${KEY_FILENAME}
+  -u _json_key --password-stdin < ${HOME}/${KEY_FILENAME}
 
 # Push Docker images to GCR
 docker push ${DOCKER_REGISTRY}/${PROJECT}/api:${DOCKER_TAG}
-#docker push ${DOCKER_REGISTRY}/${PROJECT}/frontend:${DOCKER_TAG}
 docker push ${DOCKER_REGISTRY}/${PROJECT}/cms:${DOCKER_TAG}
 docker push ${DOCKER_REGISTRY}/${PROJECT}/sap:${DOCKER_TAG}
+#docker push ${DOCKER_REGISTRY}/${PROJECT}/frontend:${DOCKER_TAG}
+
+# Clean built Docker images
+docker rmi --force ${DOCKER_REGISTRY}/api:${DOCKER_TAG}
+docker rmi --force ${DOCKER_REGISTRY}/cms:${DOCKER_TAG}
+docker rmi --force ${DOCKER_REGISTRY}/sap:${DOCKER_TAG}
+#docker rmi --force ${DOCKER_REGISTRY}/frontend:${DOCKER_TAG}

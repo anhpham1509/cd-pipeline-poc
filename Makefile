@@ -47,5 +47,4 @@ test-integration-api:
 
 .PHONY: build
 build:
-	docker -v
 	scripts/build.sh
