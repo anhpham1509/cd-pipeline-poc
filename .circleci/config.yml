@@ -96,6 +96,7 @@ workflows:
       - deploy:
           requires:
             - acceptance-testing
+            - approved
           filters:
             branches:
               only: master
