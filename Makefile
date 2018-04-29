@@ -24,21 +24,18 @@ format:
 	gofmt -s -w -e $(GO_FILES)
 	goimports -w -l -e $(GO_FILES)
 
-.PHONY: lint-sync
-lint-sync:
-	go vet ./...
-	staticcheck $(GO_PACKAGES)
-	golint -set_exit_status $(GO_PACKAGES)
-	gocyclo -over 12 $(GO_FILES_NO_TEST)
-	unused $(GO_PACKAGES)
-	gosimple $(GO_PACKAGES)
-	unconvert $(GO_PACKAGES)
-	nakedret $(GO_PACKAGES)
-	unparam $(GO_PACKAGES)
-
 .PHONY: lint
 lint:
-	make --just-print lint-sync | parallel -k
+	parallel -k \
+		go vet ./... \
+		staticcheck $(GO_PACKAGES) \
+		golint -set_exit_status $(GO_PACKAGES) \
+		gocyclo -over 12 $(GO_FILES_NO_TEST) \
+		unused $(GO_PACKAGES) \
+		gosimple $(GO_PACKAGES) \
+		unconvert $(GO_PACKAGES) \
+		nakedret $(GO_PACKAGES) \
+		unparam $(GO_PACKAGES)
 
 .PHONY: test
 test:
