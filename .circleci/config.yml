@@ -87,8 +87,9 @@ workflows:
     jobs:
       - build
       - acceptance-testing:
+          type: approval
           requires:
             - build
       - deploy:
           requires:
-            - hold
+            - acceptance-testing
