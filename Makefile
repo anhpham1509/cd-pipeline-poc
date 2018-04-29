@@ -54,7 +54,6 @@ build:
 .PHONY: npm
 npm:
 	NVM_DIR="${HOME}/.nvm"
-	NVM_VERSION=0.33.11
-	git clone --branch v$(NVM_VERSION) https://github.com/creationix/nvm.git "$(NVM_DIR)"
+	git clone --branch v0.33.11 https://github.com/creationix/nvm.git "$(NVM_DIR)"
 	source "$(NVM_DIR)/nvm.sh"
 	nvm install
