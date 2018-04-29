@@ -23,6 +23,7 @@ install:
 format:
 	gofmt -s -w -e $(GO_FILES)
 	goimports -w -l -e $(GO_FILES)
+	npm run format
 
 .PHONY: lint
 lint:
@@ -40,6 +41,7 @@ lint:
 .PHONY: test
 test:
 	go test -race -cover `go list ./...`
+	npm run test
 
 .PHONY: integration-test
 test-integration-api:
