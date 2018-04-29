@@ -4,6 +4,8 @@ DOMAIN="cd-pipeline-poc.iam.gserviceaccount.com"
 GKE_SERVICE_ACCOUNT="circleci-gke-cluster-manager@${DOMAIN}"
 KEY_FILENAME="gke-service-key.json"
 NAMESPACE=$1
+DOCKER_REGISTRY="eu.gcr.io"
+DOCKER_TAG=`git rev-parse HEAD`
 
 # Get authentication key to file
 echo ${CIRCLE_GKE_KEY} > ${HOME}/${KEY_FILENAME}

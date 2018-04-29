@@ -1,0 +1,73 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: api
+  labels:
+    app: api
+    tier: backend
+spec:
+  ports:
+    - port: 80
+      targetPort: http
+  selector:
+    app: api
+    tier: backend
+  type: LoadBalancer
+---
+apiVersion: apps/v1beta2
+kind: Deployment
+metadata:
+  name: api
+  labels:
+    app: api
+    tier: backend
+spec:
+  selector:
+    matchLabels:
+      app: api
+      tier: backend
+  template:
+    metadata:
+      annotations:
+        description: Backend API
+        version: $DOCKER_TAG
+      labels:
+        app: api
+        tier: backend
+    spec:
+      containers:
+      - name: api
+        image: $DOCKER_REGISTRY/$PROJECT/api:$DOCKER_TAG
+        env:
+        - name: PG_HOST
+          value: $PG_HOST
+        - name: PG_PORT
+          value: $PG_PORT
+        - name: PG_USER
+          value: $PG_USER
+        - name: PG_PASSWORD
+          value: $PG_PASSWORD
+        - name: PG_DATABASE
+          value: $PG_DATABASE
+        - name: PG_SSL_MODE
+          value: $PG_SSL_MODE
+        - name: PORT
+          value: "3000"
+        - name: GIN_MODE
+          value: "release"
+        ports:
+        - name: http
+          containerPort: 3000
+---
+apiVersion: autoscaling/v1
+kind: HorizontalPodAutoscaler
+metadata:
+  name: api
+spec:
+  scaleTargetRef:
+    apiVersion: apps/v1beta2
+    kind: Deployment
+    name: api
+  minReplicas: 2
+  maxReplicas: 5
+  targetCPUUtilizationPercentage: 50
