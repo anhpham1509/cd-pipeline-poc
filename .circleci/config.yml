@@ -53,6 +53,7 @@ jobs:
       - run:
           name: Upload coverage to codecov.io
           command: bash <(curl -s https://codecov.io/bash)
+      - run: make build
       - run:
           name: Push changes
           command: |
@@ -63,3 +64,28 @@ jobs:
                 exit 1
               fi
             fi
+  acceptance-testing:
+    docker:
+      - image: google/cloud-sdk:198.0.0-alpine
+    steps:
+      - run: make deploy
+
+  deploy:
+    docker:
+      - image: google/cloud-sdk:198.0.0-alpine
+    steps:
+      - run: make deploy
+    branches:
+      only: "master"
+
+workflows:
+  version: 2
+  cd-pipeline:
+    jobs:
+      - build
+      - acceptance-testing:
+          requires:
+            - build
+      - deploy:
+          requires:
+            - acceptance-testing
