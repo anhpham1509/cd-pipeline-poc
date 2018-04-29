@@ -52,6 +52,7 @@ jobs:
       - run:
           name: make format
           command: |
+            nvm use
             if [[ ${CIRCLE_BRANCH} != "master" ]]; then
               make format
               if [[ $(git status --porcelain) ]]; then
