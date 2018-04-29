@@ -77,9 +77,11 @@ jobs:
 
   deploy:
     docker:
-      - image: google/cloud-sdk:198.0.0
+      - image: google/cloud-sdk:198.0.0-alpine
+    working_directory: /cd-pipeline-poc
     steps:
-      - run: make deploy
+      - checkout
+      - run: scripts/deploy.sh
 
 workflows:
   version: 2

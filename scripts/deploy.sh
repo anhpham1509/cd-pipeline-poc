@@ -9,7 +9,7 @@ echo ${CIRCLE_GKE_KEY} > ${HOME}/${KEY_FILENAME}
 
 # Authenticate to Google Cloud
 gcloud auth activate-service-account ${GKE_CLUSTER_MANAGER_ACCOUNT} \
-  --key-file=${KEY_FILENAME}
+  --key-file=${HOME}/${KEY_FILENAME}
 
 # Get cluster credential
 gcloud container clusters get-credentials ${CLUSTER_NAME} \
