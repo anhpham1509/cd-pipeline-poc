@@ -69,13 +69,13 @@ jobs:
 
   acceptance-testing:
     docker:
-      - image: google/cloud-sdk:198.0.0-alpine
+      - image: google/cloud-sdk:198.0.0
     steps:
       - run: make deploy
 
   deploy:
     docker:
-      - image: google/cloud-sdk:198.0.0-alpine
+      - image: google/cloud-sdk:198.0.0
     steps:
       - run: make deploy
 
