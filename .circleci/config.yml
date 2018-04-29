@@ -44,7 +44,7 @@ jobs:
             if [[ $(npm -v) != 0 ]]; then
               curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
             fi
-            sudo $HOME/.nvm/nvm.sh
+            \. $HOME/.nvm/nvm.sh
             nvm install
       - run:
           name: make format
