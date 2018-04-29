@@ -3,6 +3,7 @@ PROJECT="cd-pipeline-poc"
 DOMAIN="cd-pipeline-poc.iam.gserviceaccount.com"
 GKE_SERVICE_ACCOUNT="circleci-gke-cluster-manager@${DOMAIN}"
 KEY_FILENAME="gke-service-key.json"
+NAMESPACE=$1
 
 # Get authentication key to file
 echo ${CIRCLE_GKE_KEY} > ${HOME}/${KEY_FILENAME}
@@ -32,16 +33,9 @@ do
   envsubst < ${file} > kubernetes/dist/${fileName}
 done
 
-if [[ ${CIRCLE_BRANCH} -ne "master" ]]; then
-  UNIFIED_BRANCH=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
-  NAMESPACE=${UNIFIED_BRANCH}-${CIRCLE_PR_NUMBER}
-
-  # Create a namespace if not exist
-  if [[ $(kubectl get namespace ${NAMESPACE}) != 0 ]]; then
-    kubectl create namespace ${NAMESPACE}
-  fi
-else
-  NAMESPACE="production"
+# Create a namespace if not exist
+if [[ $(kubectl get namespace ${NAMESPACE}) != 0 ]]; then
+  kubectl create namespace ${NAMESPACE}
 fi
 
 # Deploy new version
