@@ -1,4 +1,3 @@
-# GITHUB_TOKEN = 878f99ccb3997bb99f28b8b3e91704521d5b67dc
 version: 2
 machine:
   timezone: Europe/Helsinki
