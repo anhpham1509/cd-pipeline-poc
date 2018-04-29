@@ -54,5 +54,5 @@ build:
 .PHONY: npm
 npm:
 	git clone --branch v0.33.11 https://github.com/creationix/nvm.git "${HOME}/.nvm"
-	source "${HOME}/.nvm/nvm.sh"
+	\. "${HOME}/.nvm/nvm.sh"
 	nvm install
