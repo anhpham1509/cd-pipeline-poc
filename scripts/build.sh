@@ -32,7 +32,7 @@ echo ${CIRCLE_GCR_KEY} > ${HOME}/${KEY_FILENAME}
 
 # GCR Authentication
 docker login https://${DOCKER_REGISTRY} \
- -u _json_key --password-stdin < ${KEY_FILENAME}
+  -u _json_key --password-stdin < ${KEY_FILENAME}
 
 # Push Docker images to GCR
 docker push ${DOCKER_REGISTRY}/${PROJECT}/api:${DOCKER_TAG}
