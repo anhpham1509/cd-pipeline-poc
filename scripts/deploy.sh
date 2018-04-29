@@ -11,6 +11,11 @@ echo ${CIRCLE_GKE_KEY} > ${HOME}/${KEY_FILENAME}
 gcloud auth activate-service-account ${GKE_CLUSTER_MANAGER_ACCOUNT} \
   --key-file=${HOME}/${KEY_FILENAME}
 
+# Install kubectl if needed
+if [[ $(kubectl version) != 0 ]]; then
+  gcloud components install kubectl
+fi
+
 # Get cluster credential
 gcloud container clusters get-credentials ${CLUSTER_NAME} \
   --project ${PROJECT} \
