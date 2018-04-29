@@ -93,7 +93,7 @@ jobs:
           name: Staging deployment
           command: |
             UNIFIED_NAMESPACE=`echo ${CIRCLE_BRANCH} | sed 's/\//-/g' | sed 's/_/-/g' | sed 's/\./-/g' | awk '{print tolower($0)}'`
-            scripts/deploy.sh ${UNIFIED_NAMESPACE}
+            scripts/deploy.sh staging-${UNIFIED_NAMESPACE}
 
   deploy:
     docker:
