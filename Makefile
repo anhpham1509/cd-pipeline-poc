@@ -14,6 +14,10 @@ GO_TOOLS = golang.org/x/tools/cmd/goimports \
 .PHONY: setup
 setup:
 	go get -u -v ${GO_TOOLS}
+	if [[ $(npm -v) != 0 ]]; then
+		curl -o- https://raw.githubusercontent.com/creationix/nvm/v0.33.11/install.sh | bash
+	fi
+	nvm install
 
 .PHONY: install
 install:
