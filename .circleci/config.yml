@@ -44,13 +44,16 @@ jobs:
             export NVM_DIR="$HOME/.nvm"
             export NVM_VERSION=0.33.11
             git clone --branch v${NVM_VERSION} https://github.com/creationix/nvm.git ${NVM_DIR}
-            \. "${NVM_DIR}/nvm.sh"
+            source "${NVM_DIR}/nvm.sh"
             nvm install
             echo "export NVM_DIR="$HOME/.nvm"\nsource $NVM_DIR/nvm.sh" >> ${BASH_ENV}
       - run:
           name: make format
           command: |
-            nvm use
+            if [[ $(nvm use) != 0 ]]; then
+              make npm
+            fi
+
             if [[ ${CIRCLE_BRANCH} != "master" ]]; then
               make format
               if [[ $(git status --porcelain) ]]; then

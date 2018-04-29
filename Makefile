@@ -50,3 +50,11 @@ test-integration-api:
 .PHONY: build
 build:
 	scripts/build.sh
+
+.PHONY: npm
+npm:
+	export NVM_DIR="$HOME/.nvm"
+	export NVM_VERSION=0.33.11
+	git clone --branch v$NVM_VERSION https://github.com/creationix/nvm.git "$NVM_DIR"
+  source "$NVM_DIR/nvm.sh"
+	nvm install
